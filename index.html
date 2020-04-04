@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="manifest" href="/manifest.json">
+<style>
+body {background-color: DarkGrey;}
+</style>
+  <style>
+   
+
+    .login-box {
+      border: 1px solid black ;
+      padding: 20px;
+      width: 20%;
+      margin: auto;
+      background-color: #2a2f3cfc;
+
+    }
+    .login-box h2{
+      color: #fff;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+    var clevertap = { event: [], profile: [], account: [], onUserLogin: [], notifications: [], privacy: [] };
+    // replace with the CLEVERTAP_ACCOUNT_ID with the actual ACCOUNT ID value from your Dashboard -> Settings page
+    clevertap.account.push({ "id": "TEST-6K5-K57-845Z" });
+    clevertap.privacy.push({ optOut: false }); //set the flag to true, if the user of the device opts out of sharing their data
+    clevertap.privacy.push({ useIP: false }); //set the flag to true, if the user agrees to share their IP data
+    (function () {
+      var wzrk = document.createElement('script');
+      wzrk.type = 'text/javascript';
+      wzrk.async = true;
+      wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/a.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(wzrk, s);
+    })();
+  </script>
+
+</head>
+
+<body>
+  <div class="login-box">
+    <center>
+      <h2>ON USER'S LOGIN</h2>
+    </center>
+    <form onsubmit=" return pushCleverTap()">
+      <center><input type="text" id="name" placeholder="NAME" required></center><br>
+      <center><input type="mail" id="email" placeholder="EMAIL" required></center><br>
+      <center><input style="background-color: LightGreen; text-color: White"type="submit" value="Submit"></center>
+    </form><br>
+    <form onsubmit="return pushCleverTapEvent()">
+      <center><input type="text" id="event" placeholder="EVENT" required></center><br>
+      <center><input style="background-color: LightGreen; text-color: White"type="submit" value="PUSH EVENT"></center>
+    </form>
+  </div>
+  <script>
+
+    function pushCleverTapUserInfo() {
+      var name = $('#name').val()
+      var email = $('#email').val()
+      console.log(name);
+      console.log(email);
+      clevertap.profile.push({
+        "Site": {
+          "Name": name, // User's name
+          "Email": email
+        }
+      });
+      return false;
+
+    }
+    function pushCleverTapEvent() {
+      var eventName = $('#event').val()
+      console.log(eventName);
+      clevertap.event.push(eventName);
+      return false;
+    }
+
+    clevertap.notifications.push({
+    "titleText":'Would you like to receive Push Notifications?',
+    "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+    "okButtonText":'Sign me up!',
+    "rejectButtonText":'No thanks',
+    "okButtonColor":'#f28046'});
+
+  </script>
+</body>
+
+</html>
